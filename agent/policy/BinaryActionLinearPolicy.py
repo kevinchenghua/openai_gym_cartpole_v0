@@ -1,6 +1,6 @@
 import numpy as np
 
-class LinearModel(object):
+class BinaryActionLinearPolicy(object):
     def __init__(self, w, b):
         self.w = w
         self.b = b
