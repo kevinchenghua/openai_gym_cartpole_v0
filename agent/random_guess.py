@@ -9,7 +9,8 @@ class RandomGuess(object):
     
     Attributes:
         env: The gym environment.
-        n_sample(int): The number of agent samples.
+        n_samples(int): The number of agent samples.
+        n_steps(int): The number of maximum steps for a trial.
         w_mean(double): The mean of normal distribution to generate w.
         w_std(double): The standard deviation of normal distribution to generate w.
         b_mean(double): The mean of normal distribution to generate b.
@@ -17,20 +18,21 @@ class RandomGuess(object):
         best_agent(BinaryActionLinearPolicy): The best agent choosed.
     
     """
-    def __init__(self, env, n_sample=10000, w_mean=0.0, w_std=1.0, b_mean=0.0, b_std=1.0):
+    def __init__(self, env, n_samples=10000, n_steps=250, w_mean=0.0, w_std=1.0, b_mean=0.0, b_std=1.0):
         self.env = env
-        self.n_sample = n_sample
+        self.n_samples = n_samples
+        self.n_steps = n_steps
         self.w_mean = w_mean
         self.w_std = w_std
         self.b_mean = b_mean
         self.b_std = b_std
         
-        self.best_agent = self._evaluate_best()
+        self.best_agent = self._evaluate_best(n_steps)
         
     def _evaluate_best(self, n_steps=200):
         """This is a helper method for __init__.
         
-        This method try n_sample times and return the best parameter.
+        This method try n_samples times and return the best parameter.
         
         Args:
             n_steps(int): The maximum steps for a trial.
@@ -39,7 +41,7 @@ class RandomGuess(object):
         """
         best_reward = 0
         best_agent = None
-        for i in range(self.n_sample):
+        for i in range(self.n_samples):
             print str(i+1)+"th trial ",
             total_reward = 0
             agent = self._generate_agent()
@@ -55,6 +57,7 @@ class RandomGuess(object):
                 print "find a better agent."
                 best_agent = agent
                 best_reward = total_reward
+        print "Find best agent with reward: " + str(best_reward)
         return best_agent
             
     def _generate_agent(self):
