@@ -19,7 +19,7 @@ print(env.observation_space.low)
 
 ## Sample related parameters
 N_SAMPLES = 10000       # Total number of samples
-N_STEPS = 250           # Maximum step to run a trial
+N_STEPS = 500           # Maximum step to run a trial
 W_MEAN = 0.0            # The mean of normal distribution to generate w.
 W_STD = 1.0             # The standard deviation of normal distribution to generate w.
 B_MEAN = 0.0            # The mean of normal distribution to generate b.
