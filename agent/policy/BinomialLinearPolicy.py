@@ -17,5 +17,10 @@ class BinomialLinearPolicy(object):
         x = np.dot(self.w, ob) + self.b
         prob = self._softmax(x)
         return prob
+    def get_grad(self, ob, a):
+        b_grad = -self.get_action_prob(ob)
+        b_grad[a] = 1 + b_grad[a]
+        w_grad = np.dot(b_grad[np.newaxis].T, ob[np.newaxis])
+        return w_grad, b_grad
     def _softmax(self, x):
         return np.exp(x) / np.sum(np.exp(x), axis=0)
