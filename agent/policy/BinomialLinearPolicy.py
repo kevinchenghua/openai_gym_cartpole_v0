@@ -7,7 +7,7 @@ class BinomialLinearPolicy(object):
     def act(self, ob):
         prob = self.get_action_prob(ob)
         a = np.random.choice(2, 1, p=prob)
-        return a
+        return a[0]
     def get_parameters(self):
         return self.w, self.b
     def set_parameters(self, w, b):
