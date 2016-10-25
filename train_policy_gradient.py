@@ -1,7 +1,10 @@
 import gym
-import numpy
+import numpy as np
+import matplotlib.pyplot as plt
 import cPickle as pkl
 
+from mpl_toolkits.mplot3d import Axes3D
+from matplotlib.collections import LineCollection
 from agent.policy_gradient import PolicyGradient
 
 #------------------- Create environment ---------------------
@@ -18,7 +21,7 @@ print(env.observation_space.low)
 #-------------------- Create best agent ---------------------
 
 ## Sample related parameters
-N_EPISODES = 10000           # Maximum number of episodes to find the best policy
+N_EPISODES = 5000            # Maximum number of episodes to find the best policy
 N_STEPS = 200                # Maximum step to run a trial (because monitor is used, N_STEPS is 200 at most)
 L_RATE = 0.01                # Learning rate
 W_INIT_MEAN = 0.0            # The mean of normal distribution to generate w.
@@ -31,11 +34,33 @@ env.monitor.start('result/policy_gradient/train', force=True)
 PG = PolicyGradient(env, N_EPISODES, N_STEPS, L_RATE, W_INIT_MEAN, W_INIT_STD, B_INIT_MEAN, B_INIT_STD)
 env.monitor.close()
 agent = PG.get_agent()
+track = PG.get_pca_track()
+
+# plot the training track
+fig = plt.figure()
+ax = fig.gca(projection='3d')
+ax.set_xlabel('PCA component 1')
+ax.set_ylabel('PCA component 2')
+ax.set_zlabel('Reward')
+n_line = 1000
+step = track.shape[0]/n_line
+for i in xrange(0, track.shape[0]-step, step):
+    ax.plot(track[i:i+step+1,0], track[i:i+step+1,1], track[i:i+step+1,2], color=plt.cm.plasma(255*i/track.shape[0]))
+m = plt.cm.ScalarMappable(cmap=plt.cm.plasma)
+m.set_array([0,track.shape[0]])
+cbar = fig.colorbar(m)
+cbar.set_label('episode')  
+plt.show()
 
 
 # save the agent
 with open("result/policy_gradient/agent.pkl", 'wb') as f:
     pkl.dump(agent, f)
+# save the plot
+fig.savefig('result/policy_gradient/training_track_reward.png') 
+ax.elev = 90
+ax.azim = 90
+fig.savefig('result/policy_gradient/training_track.png') 
 
 #------------------------------------------------------------
 
