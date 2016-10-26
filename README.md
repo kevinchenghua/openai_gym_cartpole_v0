@@ -50,4 +50,4 @@ This will generate a agent pickle file ```./result/policy_gradient```.
 And you'll get training process record in ```./result/policy_gradient/train/```.  
 Also the image of parameters trajectory in PCA trasformation ```./result/policy_gradient/training_track.png``` and ```./result/policy_gradient/training_track_reward.png```:  
 ![](images/training_track.png)![](images/training_track_reward.png)  
-We can found that Monte-Carlo policy gradient has high variance and is not stable.
+We can found that Monte-Carlo policy gradient with linear model has high variance and is not stable.
