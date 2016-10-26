@@ -25,10 +25,29 @@ choose the policy:
 ```
 python train_random_guess.py
 ```
-This will generate a agent pickle file ./result/random_guess/agent.pkl. To use it:
+This will generate a agent pickle file ```./result/random_guess/agent.pkl```. To use it:
 ```
 python evaluate_random_guess.py
 ```
-And you'll got some testing result in ./result/experiment-1/. Example:
+And you'll get some testing result in ```./result/experiment-1/```. Example:
 
 ![](images/openaigym.gif)
+
+### Hill Climbing
+choose the policy:
+```
+python train_hill_climb.py
+```
+This will generatr a agent pickle file ```./result/hill_climb/agent.pkl```.  
+And you'll get training process record in ```./result/hill_climb/train/```.
+
+### Policy Gradient
+choose the policy:
+```
+python train_policy_gradient.py
+```
+This will generate a agent pickle file ```./result/policy_gradient```.  
+And you'll get training process record in ```./result/policy_gradient/train/```.  
+Also the image of parameters trajectory in PCA trasformation ```./result/policy_gradient/training_track.png``` and ```./result/policy_gradient/training_track_reward.png```:  
+![](images/training_track.png)![](images/training_track_reward.png)  
+We can found that Monte-Carlo policy gradient has high variance and is not stable.
