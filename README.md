@@ -49,5 +49,13 @@ python train_policy_gradient.py
 This will generate a agent pickle file ```./result/policy_gradient```.  
 And you'll get training process record in ```./result/policy_gradient/train/```.  
 Also the image of parameters trajectory in PCA trasformation ```./result/policy_gradient/training_track.png``` and ```./result/policy_gradient/training_track_reward.png```:  
-![](images/training_track.png)![](images/training_track_reward.png)  
-We can found that Monte-Carlo policy gradient with linear model has high variance and is not stable.
+![](images/training_track.png)![](images/training_track_reward.png)
+
+We can found that Monte-Carlo policy gradient has high variance. To reduce the variance, we could substract a baseline from the value function. And this baseline is estimate from the reward of the training histroy. To train with this method:
+```
+python train_policy_gradient_baseline.py
+```  
+You'll get the result:
+![](images/training_track_baseline.png)![](images/training_track_reward_baseline.png)
+
+The variance is reduced.
